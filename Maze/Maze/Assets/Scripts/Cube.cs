@@ -60,24 +60,24 @@ public class Cube : MonoBehaviour
         mb.CreateTriangle(t1, t3, t4, 0);
 
         //bottom face
-        mb.CreateTriangle(b3, b2, b1, 1);
-        mb.CreateTriangle(b4, b3, b1, 1);
+        mb.CreateTriangle(b3, b2, b1, 0);
+        mb.CreateTriangle(b4, b3, b1, 0);
 
         //front face
-        mb.CreateTriangle(b1, b2, t2, 2);
-        mb.CreateTriangle(b1, t2, t1, 2);
+        mb.CreateTriangle(b1, b2, t2, 0);
+        mb.CreateTriangle(b1, t2, t1, 0);
 
         //back face
-        mb.CreateTriangle(t4, b3, b4, 3);
-        mb.CreateTriangle(t3, b3, t4, 3);
+        mb.CreateTriangle(t4, b3, b4, 0);
+        mb.CreateTriangle(t3, b3, t4, 0);
 
         //left face
-        mb.CreateTriangle(t3, t2, b2, 4);
-        mb.CreateTriangle(t3, b2, b3, 4);
+        mb.CreateTriangle(t3, t2, b2, 0);
+        mb.CreateTriangle(t3, b2, b3, 0);
 
         //right face
-        mb.CreateTriangle(t1, t4, b4, 5);
-        mb.CreateTriangle(t1, b4, b1, 5);
+        mb.CreateTriangle(t1, t4, b4, 0);
+        mb.CreateTriangle(t1, b4, b1, 0);
 
         return mb.CreateMesh();
     }
@@ -86,6 +86,7 @@ public class Cube : MonoBehaviour
     {
         List<Material> ml = new List<Material>();
 
+        /*
         Material redMaterial = new Material(Shader.Find("Specular"));
         redMaterial.color = Color.red;
 
@@ -110,7 +111,12 @@ public class Cube : MonoBehaviour
         ml.Add(yellowMaterial);
         ml.Add(magentaMaterial);
         ml.Add(cyanMaterial);
+        */
 
+        Material blackMaterial = new Material(Shader.Find("Specular"));
+        blackMaterial.color = Color.black;
+
+        ml.Add(blackMaterial);
         return ml;
     }
 }

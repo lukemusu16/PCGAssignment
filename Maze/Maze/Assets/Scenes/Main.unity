@@ -248,8 +248,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quadSize: 1
-  planeSizeX: 21
-  planeSizeZ: 21
+  planeSizeX: 50
+  planeSizeZ: 50
   meshSize: 1
 --- !u!23 &1503100866
 MeshRenderer:

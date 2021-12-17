@@ -73,7 +73,7 @@ public class Wall : MonoBehaviour
                         delCube.GetComponent<Cube>().isVisted = true;
                     }
                 }
-                else if (x == 1 || x == blockSizeX - 2)
+                else if (y == 1 || y == blockSizeY - 2)
                 {
                     GameObject delCube;
 
@@ -87,7 +87,7 @@ public class Wall : MonoBehaviour
 
         GameObject outCube;
 
-        if (cubePos.TryGetValue(Points[2, 1], out outCube))
+        if (cubePos.TryGetValue(Points[blockSizeX/2, blockSizeY/2], out outCube))
         {
             print("got this far");
             MazeAlgorithm(outCube, Points);
@@ -116,34 +116,85 @@ public class Wall : MonoBehaviour
 
         GameObject[] cubes = new GameObject[4];
 
+
+
         if (cubePos.TryGetValue(points[(int)pos.x + 1, (int)pos.z], out cubes[0]) &&
             cubePos.TryGetValue(points[(int)pos.x, (int)pos.z + 1], out cubes[1]) &&
             cubePos.TryGetValue(points[(int)pos.x - 1, (int)pos.z], out cubes[2]) &&
             cubePos.TryGetValue(points[(int)pos.x, (int)pos.z - 1], out cubes[3]))
         {
-            try
+            int ranNum = UnityEngine.Random.Range(0, 3);
+
+            while (cubes[0].GetComponent<Cube>().isVisted == false ||
+                  cubes[1].GetComponent<Cube>().isVisted == false ||
+                  cubes[2].GetComponent<Cube>().isVisted == false ||
+                  cubes[3].GetComponent<Cube>().isVisted == false)
             {
+                
+                print(cubes[ranNum].transform.position);
 
-                while (!cubes[1].GetComponent<Cube>().isVisted ||
-                      !cubes[2].GetComponent<Cube>().isVisted ||
-                      !cubes[3].GetComponent<Cube>().isVisted ||
-                      !cubes[4].GetComponent<Cube>().isVisted)
+                if (cubes[ranNum].GetComponent<Cube>().isVisted == false)
                 {
-                    int ranNum = UnityEngine.Random.Range(0, 3);
+                    switch (ranNum)
+                    {
+                        case 0:
+                            cubes[0].GetComponent<Cube>().isVisted = true;
+                            cubes[1].GetComponent<Cube>().isVisted = true;
+                            cubes[3].GetComponent<Cube>().isVisted = true;
 
-                    cubes[ranNum].GetComponent<Cube>().isVisted = true;
+                            Destroy(cubes[ranNum]);
 
-                    Destroy(cubes[ranNum]);
+                            MazeAlgorithm(cubes[ranNum], points);
+                            break;
 
-                    MazeAlgorithm(cubes[ranNum], points);
+                        case 1:
+                            cubes[1].GetComponent<Cube>().isVisted = true;
+                            cubes[0].GetComponent<Cube>().isVisted = true;
+                            cubes[2].GetComponent<Cube>().isVisted = true;
+
+                            Destroy(cubes[ranNum]);
+
+                            MazeAlgorithm(cubes[ranNum], points);
+                            break;
+
+                        case 2:
+                            cubes[2].GetComponent<Cube>().isVisted = true;
+                            cubes[1].GetComponent<Cube>().isVisted = true;
+                            cubes[3].GetComponent<Cube>().isVisted = true;
+
+                            Destroy(cubes[ranNum]);
+
+                            MazeAlgorithm(cubes[ranNum], points);
+                            break;
+
+                        case 3:
+                            cubes[3].GetComponent<Cube>().isVisted = true;
+                            cubes[0].GetComponent<Cube>().isVisted = true;
+                            cubes[2].GetComponent<Cube>().isVisted = true;
+
+                            Destroy(cubes[ranNum]);
+
+                            MazeAlgorithm(cubes[ranNum], points);
+                            break;
+                    }
+                    
+
+                }
+                else if (ranNum == 3)
+                {
+                    ranNum = 0;
+                }
+                else 
+                {
+                    ranNum++;
                 }
             }
-            catch (Exception e)
-            { 
-                
-            }
-
         }
+
+
+        return;
+
+
 
     }
 }
