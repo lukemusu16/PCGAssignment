@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshCollider))]
 
 public class Plane : MonoBehaviour
 {
@@ -29,10 +30,11 @@ public class Plane : MonoBehaviour
     {
         MeshFilter mf = this.GetComponent<MeshFilter>();
         MeshRenderer mr = this.GetComponent<MeshRenderer>();
+        MeshCollider mc = this.GetComponent<MeshCollider>();
 
         mf.mesh = CreatePlane();
-
         mr.materials = MaterialsList().ToArray();
+        mc.sharedMesh = mf.mesh;
     }
 
     private Mesh CreatePlane()

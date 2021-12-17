@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wall : MonoBehaviour
+public class Maze : MonoBehaviour
 {
 
     [SerializeField]
@@ -20,7 +20,6 @@ public class Wall : MonoBehaviour
     void Start()
     {
         CreateMaze();
-
     }
 
     // Update is called once per frame
@@ -47,16 +46,16 @@ public class Wall : MonoBehaviour
         {
             for (int y = 0; y < blockSizeY; y++)
             {
-                   GameObject cube = new GameObject();
-                   cube.name = "Cube" + x + "," + y;
-                   Cube c = cube.AddComponent<Cube>();
-                   cube.transform.position = Points[x,y];
-                   this.transform.parent = this.transform;
-                   c.CubeSize = new Vector3(0.5f, 1f, 0.5f);
+                GameObject cube = new GameObject();
+                cube.name = "Cube" + x + "," + y;
+                Cube c = cube.AddComponent<Cube>();
+                cube.transform.position = Points[x, y];
+                this.transform.parent = this.transform;
+                c.CubeSize = new Vector3(0.5f, 1f, 0.5f);
 
-                    cubePos.Add(Points[x,y], cube);
-                    
-                   
+                cubePos.Add(Points[x, y], cube);
+
+
             }
         }
 
@@ -87,7 +86,7 @@ public class Wall : MonoBehaviour
 
         GameObject outCube;
 
-        if (cubePos.TryGetValue(Points[blockSizeX/2, blockSizeY/2], out outCube))
+        if (cubePos.TryGetValue(Points[blockSizeX / 2, blockSizeY / 2], out outCube))
         {
             print("got this far");
             MazeAlgorithm(outCube, Points);
@@ -130,7 +129,7 @@ public class Wall : MonoBehaviour
                   cubes[2].GetComponent<Cube>().isVisted == false ||
                   cubes[3].GetComponent<Cube>().isVisted == false)
             {
-                
+
                 print(cubes[ranNum].transform.position);
 
                 if (cubes[ranNum].GetComponent<Cube>().isVisted == false)
@@ -177,14 +176,14 @@ public class Wall : MonoBehaviour
                             MazeAlgorithm(cubes[ranNum], points);
                             break;
                     }
-                    
+
 
                 }
                 else if (ranNum == 3)
                 {
                     ranNum = 0;
                 }
-                else 
+                else
                 {
                     ranNum++;
                 }

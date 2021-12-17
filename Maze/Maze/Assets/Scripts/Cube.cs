@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
-
+[RequireComponent(typeof(MeshCollider))]
 public class Cube : MonoBehaviour
 {
     [SerializeField]
@@ -34,9 +34,11 @@ public class Cube : MonoBehaviour
     {
         MeshFilter mf = this.GetComponent<MeshFilter>();
         MeshRenderer mr = this.GetComponent<MeshRenderer>();
+        MeshCollider mc = this.GetComponent<MeshCollider>();
 
         mf.mesh = CreateCube();
         mr.materials = MaterialsList().ToArray();
+        mc.sharedMesh = mf.mesh;
     }
 
     private Mesh CreateCube()
