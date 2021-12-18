@@ -6,13 +6,15 @@ public class Movement : MonoBehaviour
 {
     private CharacterController controller;
     private Vector3 playerVelocity;
-    private float playerSpeed = 2.0f;
+    private float playerSpeed = 5.0f;
     private float gravityValue = -9.81f;
+
+    
 
     private void Start()
     {
         controller = this.gameObject.GetComponent<CharacterController>();
-        this.transform.position = new Vector3(Random.Range(0, 50), 0.5f, 0.5f);
+        
 
         MeshRenderer mr = this.GetComponent<MeshRenderer>();
         mr.materials = MaterialsList().ToArray();
@@ -22,18 +24,20 @@ public class Movement : MonoBehaviour
     {
 
 
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0.5f, Input.GetAxis("Vertical"));
         controller.Move(move * Time.deltaTime * playerSpeed);
 
         if (move != Vector3.zero)
         {
-            gameObject.transform.forward = move;
+            gameObject.transform.position = move;
         }
 
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
+
+
 
     private List<Material> MaterialsList()
     {

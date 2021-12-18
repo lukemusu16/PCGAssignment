@@ -7,9 +7,9 @@ public class Maze : MonoBehaviour
 {
 
     [SerializeField]
-    private int blockSizeX = 50;
+    public int blockSizeX = 50;
     [SerializeField]
-    private int blockSizeY = 50;
+    public int blockSizeY = 50;
 
     private int offset;
 
