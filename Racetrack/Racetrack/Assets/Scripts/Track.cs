@@ -40,6 +40,13 @@ public class Track : MonoBehaviour
     [SerializeField]
     private GameObject car;
 
+    private float CheckpointWidth;
+
+    private List<Vector3> checkPointList = new List<Vector3>();
+
+    [SerializeField]
+    private GameObject checkpointPrefab;
+
 
     private MeshGenerator meshGenerator;
 
@@ -54,6 +61,9 @@ public class Track : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        variance = Random.Range(10F,50F);
+        varianceScale = Random.Range(0f, 15f);
+        CheckpointWidth = (roadMarkerWidth + roadWidth + barrierWidth) * 2;
         RenderTrack();
     }
 
@@ -88,6 +98,8 @@ public class Track : MonoBehaviour
 
             Vector3 point = Quaternion.AngleAxis(degrees, Vector3.up) * Vector3.forward * radius;
             pointRefList.Add(point);
+
+            
         }
 
 
@@ -114,6 +126,23 @@ public class Track : MonoBehaviour
             Vector3 nextQuadRef = pointRefList[(i + 1) % pointRefList.Count];
 
             CreateTrackSegment(prevQuadRef, curQuadRef, nextQuadRef);
+        }
+
+        int index = pointRefList.Count / 4;
+
+        checkPointList.Add(pointRefList[index]);
+        checkPointList.Add(pointRefList[(index * 2) - 1]);
+        checkPointList.Add(pointRefList[(index * 3) - 1]);
+        checkPointList.Add(pointRefList[(index * 4) - 2]);
+
+        for (int i = 0; i < checkPointList.Count; i++)
+        {
+            GameObject checkpoint = Instantiate(checkpointPrefab,Vector3.zero,Quaternion.identity);
+            checkpoint.name = "Checkpoint " + i;
+            checkpoint.transform.localScale = new Vector3(CheckpointWidth, 5f, 1f);
+            checkpoint.transform.position = checkPointList[i];
+            checkpoint.transform.LookAt(pointRefList[pointRefList.IndexOf(checkpoint.transform.position) + 1]);
+            checkpoint.transform.parent = GameObject.Find("Checkpoints").transform;
         }
 
         car.transform.position = pointRefList[0];
