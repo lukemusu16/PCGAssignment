@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TrackCheckpoints : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class TrackCheckpoints : MonoBehaviour
 
     private List<CheckpointHandler> checkpointList;
     private int nextCheckpoint = 0;
+
+    [SerializeField]
+    private GameObject gm;
+
 
     private void Start()
     {
@@ -24,7 +29,6 @@ public class TrackCheckpoints : MonoBehaviour
 
         foreach (Transform checkpoint in checkpointsTransform)
         {
-            print("boi");
             CheckpointHandler cp = checkpoint.GetComponent<CheckpointHandler>();
             cp.SetTrackCheckpoints(this);
             checkpointList.Add(cp);
@@ -35,9 +39,26 @@ public class TrackCheckpoints : MonoBehaviour
     {
         if (checkpointList.IndexOf(cp) == nextCheckpoint)
         {
+            
             print("correct");
-            nextCheckpoint++;
-            OnCorrectCheckpoint?.Invoke(this, EventArgs.Empty);
+
+            if (nextCheckpoint == 3)
+            {
+                gm.GetComponent<GameManager>().enabled = false;
+                GetComponent<TrackCheckpoints>().enabled = false;
+                SceneManager.LoadScene("Main");
+                gm.GetComponent<GameManager>().enabled = true;
+                GetComponent<TrackCheckpoints>().enabled = true;
+
+            }
+            else
+            {
+                nextCheckpoint++;
+                OnCorrectCheckpoint?.Invoke(this, EventArgs.Empty);
+            }
+            
+
+
         }
         else
         {
