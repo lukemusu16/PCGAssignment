@@ -122,7 +122,7 @@ public class Maze : MonoBehaviour
             cubePos.TryGetValue(points[(int)pos.x - 1, (int)pos.z], out cubes[2]) &&
             cubePos.TryGetValue(points[(int)pos.x, (int)pos.z - 1], out cubes[3]))
         {
-            int ranNum = UnityEngine.Random.Range(0, 3);
+            int ranNum = UnityEngine.Random.Range(0, 4);
 
             while (cubes[0].GetComponent<Cube>().isVisted == false ||
                   cubes[1].GetComponent<Cube>().isVisted == false ||
